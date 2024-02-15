@@ -1,0 +1,22 @@
+---
+import Layout from '../layouts/Layout.astro';
+const examples = await Astro.glob("/src/pages/examples/*.astro")
+---
+
+<Layout title="Astro con HTMX">
+{
+	examples.reverse().map((example) =>{
+		return  (
+			<a
+				href={example.url}
+				class="text-lg block p-4 border-b border-gray-200 rounded"
+			>
+				{example.url}
+			</a>
+		)
+	})
+}
+</Layout>
+
+<style>
+</style>
