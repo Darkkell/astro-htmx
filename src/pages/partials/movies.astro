@@ -9,21 +9,24 @@ const { description } = (await res.json()) as {
 }
 
 const movies = description?.map((movie) =>{
-    const {
+
+    let {
         "#TITLE": title,
         "#YEAR": year,
         "#IMG_POSTER": poster,
         "#RANK": rank,
         "#ACTORS": actors
-     } = movie as Record<string, string>
+    } = movie as Record<string, string>
 
-     return {
+    poster != undefined ? poster : poster = "https://cdn.wallpapersafari.com/16/83/jGJp1D.jpg"
+
+    return {
         title,
         year,
         poster,
         rank,
         actors
-     }
+    }
 })
 ---
 
@@ -35,8 +38,8 @@ const movies = description?.map((movie) =>{
                     <img
                         src={movie.poster}
                         alt={movie.title}
-                        class="aspect-[11/16] w-full h-auto object-cover rounded-lg">
-                    <h2 class="text-white">
+                        class="aspect-[11/16] w-full h-auto object-cover rounded-xl">
+                    <h2 class="text-white pt-1">
                         {movie.title}{" "}<span class="text-xs text-gray-500">{movie.year}</span>
                     </h2>
                 </article>
