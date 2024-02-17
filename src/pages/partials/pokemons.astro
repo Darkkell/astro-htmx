@@ -1,0 +1,66 @@
+---
+const formData = await Astro.request.formData()
+const search = formData.get("search")
+let pokemon : any
+
+let er = false
+
+if(search != ""){
+    try {
+        const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${search}/`)
+        const data = await res.json()
+
+        pokemon = {
+            id: data.id,
+            name : data.name,
+            sprite: data.sprites.other["official-artwork"].front_default,
+            sprite_dream_world: data.sprites.other.dream_world.front_default,
+            types: data.types.map((item)=>{
+                return item.type.name
+            }),
+            moves: data.moves.map((item)=>{
+                return item.move.name
+            }),
+            stats: data.stats.map((item)=>({
+                name: item.stat.name,
+                base_stat: item.base_stat
+            }))
+        }
+        
+        console.log(pokemon)
+    } catch (error) {
+        console.error('sucedio un error');
+        er = true
+    }
+}
+---
+{
+    search != "" && er  !== true &&
+    <li>
+        <article>
+            <img src={pokemon.sprite}
+            alt={pokemon.name}>
+            <h1 class="text-capitalize">{pokemon.name}</h1>
+            <h2>#{pokemon.id}</h2>
+            <div>
+                {
+                    pokemon.types.map((type) =>{
+                        return(
+                            <span>{type}</span>
+                        )
+                    })
+                }
+            </div>
+            <div>
+                {
+                    pokemon.moves.map((move)=>{
+                        return(
+                            <a>{move}</a>
+                        )
+                    })
+                }
+            </>
+        </article>
+    </li>
+
+}

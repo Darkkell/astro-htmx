@@ -1,4 +1,8 @@
-# Astro Starter Kit: Basics
+# Astro - HTMX
+
+Incluyendo HTMX en Astro
+
+## Astro Starter Kit: Basics
 
 ```sh
 npm create astro@latest -- --template basics
