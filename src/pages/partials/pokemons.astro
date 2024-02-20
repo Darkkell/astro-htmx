@@ -1,4 +1,11 @@
 ---
+import AttackIcon from "../../icons/Attack.astro";
+import DefenseIcon from "../../icons/Defense.astro";
+import HpIcon from "../../icons/Hp.astro";
+import SpecialAttackIcon from "../../icons/Special-attack.astro";
+import SpecialDefenseIcon from "../../icons/Special-defense.astro";
+import SpeedIcon from "../../icons/Speed.astro";
+
 const formData = await Astro.request.formData()
 const search = formData.get("search")
 let pokemon : any
@@ -9,6 +16,7 @@ if(search != ""){
     try {
         const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${search}/`)
         const data = await res.json()
+        console.log(data);
 
         pokemon = {
             id: () =>{
@@ -31,12 +39,13 @@ if(search != ""){
                 return item.move.name
             }),
             stats: data.stats.map((item: { stat: { name: any }; base_stat: any })=>({
-                name: item.stat.name,
-                base_stat: item.base_stat
+                name: statsName(item.stat.name),
+                base_stat: item.base_stat,
+                color: statsColor(item.stat.name)
             }))
         }
 
-        console.log(pokemon)
+        // console.log(pokemon)
     } catch (error) {
         console.error('sucedio un error');
         er = true
@@ -45,88 +54,132 @@ if(search != ""){
 
 const typeColor: any = {
     normal:{
-        color: "linear-gradient(105deg,#A8A878 30px,#5A5A5A 31px,#5A5A5A);",
+        color: "background:linear-gradient(105deg,#A8A878 30px,#5A5A5A 31px,#5A5A5A);",
         icon: "https://archives.bulbagarden.net/media/upload/thumb/a/ae/Normal_icon.png/20px-Normal_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#A8A878 36%, #ffffff 36%);"
     },
     fire: {
-        color: "linear-gradient(105deg,#F08030 30px,#5A5A5A 31px,#5A5A5A)",
-        icon: "https://archives.bulbagarden.net/media/upload/thumb/5/5e/Fire_icon.png/20px-Fire_icon.png"
+        color: "background:linear-gradient(105deg,#F08030 30px,#5A5A5A 31px,#5A5A5A)",
+        icon: "https://archives.bulbagarden.net/media/upload/thumb/5/5e/Fire_icon.png/20px-Fire_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#F08030 36%, #ffffff 36%);"
     },
     water: {
-        color: "linear-gradient(105deg,#6890F0 30px,#5A5A5A 31px,#5A5A5A);",
-        icon: "https://archives.bulbagarden.net/media/upload/thumb/7/7f/Water_icon.png/20px-Water_icon.png"
+        color: "background:linear-gradient(105deg,#6890F0 30px,#5A5A5A 31px,#5A5A5A);",
+        icon: "https://archives.bulbagarden.net/media/upload/thumb/7/7f/Water_icon.png/20px-Water_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#6890F0 36%, #ffffff 36%);"
     },
     grass: {
-        color:"linear-gradient(105deg,#78C850 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/c/cb/Grass_icon.png/20px-Grass_icon.png"
+        color:"background:linear-gradient(105deg,#78C850 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/c/cb/Grass_icon.png/20px-Grass_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#78C850 36%, #ffffff 36%);"
     },
     electric: {
-        color:"linear-gradient(105deg,#F8D030 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/a/af/Electric_icon.png/20px-Electric_icon.png"
+        color:"background:linear-gradient(105deg,#F8D030 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/a/af/Electric_icon.png/20px-Electric_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#F8D030 36%, #ffffff 36%);"
     },
     ice: {
-        color:"linear-gradient(105deg,#98D8D8 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/8/83/Ice_icon.png/20px-Ice_icon.png"
+        color:"background:linear-gradient(105deg,#98D8D8 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/8/83/Ice_icon.png/20px-Ice_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#98D8D8 36%, #ffffff 36%);"
     },
     ground: {
-        color:"linear-gradient(105deg,#E0C068 30px,#5A5A5A 31px,#5A5A5A)",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/5/58/Ground_icon.png/20px-Ground_icon.png"
+        color:"background:linear-gradient(105deg,#E0C068 30px,#5A5A5A 31px,#5A5A5A)",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/5/58/Ground_icon.png/20px-Ground_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#E0C068 36%, #ffffff 36%);"
     },
     flying: {
-        color:"linear-gradient(105deg,#A890F0 30px,#5A5A5A 31px,#5A5A5A);",
-        icon: "https://archives.bulbagarden.net/media/upload/thumb/f/f0/Flying_icon.png/20px-Flying_icon.png"
+        color:"background:linear-gradient(105deg,#A890F0 30px,#5A5A5A 31px,#5A5A5A);",
+        icon: "https://archives.bulbagarden.net/media/upload/thumb/f/f0/Flying_icon.png/20px-Flying_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#A890F0 36%, #ffffff 36%);"
     },
     poison: {
-        color:"linear-gradient(105deg,#A040A0 30px,#5A5A5A 31px,#5A5A5A)",
-        icon: "https://archives.bulbagarden.net/media/upload/thumb/8/84/Poison_icon.png/20px-Poison_icon.png"
+        color:"background:linear-gradient(105deg,#A040A0 30px,#5A5A5A 31px,#5A5A5A)",
+        icon: "https://archives.bulbagarden.net/media/upload/thumb/8/84/Poison_icon.png/20px-Poison_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#A040A0 36%, #ffffff 36%);"
     },
     fighting: {
-        color:"linear-gradient(105deg,#C03028 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/7/7d/Fighting_icon.png/20px-Fighting_icon.png"
+        color:"background:linear-gradient(105deg,#C03028 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/7/7d/Fighting_icon.png/20px-Fighting_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#C03028 36%, #ffffff 36%);"
     },
     psychic: {
-        color:"linear-gradient(105deg,#F85888 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/a/a6/Psychic_icon.png/20px-Psychic_icon.png"
+        color:"background:linear-gradient(105deg,#F85888 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/a/a6/Psychic_icon.png/20px-Psychic_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#F85888 36%, #ffffff 36%);"
     },
     dark: {
-        color:"linear-gradient(105deg,#705848 30px,#5A5A5A 31px,#5A5A5A);",
-        icon: "https://archives.bulbagarden.net/media/upload/thumb/3/33/Dark_icon.png/20px-Dark_icon.png"
+        color:"background:linear-gradient(105deg,#705848 30px,#5A5A5A 31px,#5A5A5A);",
+        icon: "https://archives.bulbagarden.net/media/upload/thumb/3/33/Dark_icon.png/20px-Dark_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#705848 36%, #ffffff 36%);"
     },
     rock: {
-        color:"linear-gradient(105deg,#B8A038 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/f/ff/Rock_icon.png/20px-Rock_icon.png"
+        color:"background:linear-gradient(105deg,#B8A038 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/f/ff/Rock_icon.png/20px-Rock_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#B8A038 36%, #ffffff 36%);"
     },
     bug: {
-        color:"linear-gradient(105deg,#A8B820 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/7/79/Bug_icon.png/20px-Bug_icon.png"
+        color:"background:linear-gradient(105deg,#A8B820 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/7/79/Bug_icon.png/20px-Bug_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#A8B820 36%, #ffffff 36%);"
     },
     ghost: {
-        color:"linear-gradient(105deg,#705898 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/8/82/Ghost_icon.png/20px-Ghost_icon.png"
+        color:"background:linear-gradient(105deg,#705898 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/8/82/Ghost_icon.png/20px-Ghost_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#705898 36%, #ffffff 36%);"
     },
     steel: {
-        color:"linear-gradient(105deg,#B8B8D0 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/b/b8/Steel_icon.png/20px-Steel_icon.png"
+        color:"background:linear-gradient(105deg,#B8B8D0 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/b/b8/Steel_icon.png/20px-Steel_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#B8B8D0 36%, #ffffff 36%);"
     },
     dragon: {
-        color:"linear-gradient(105deg,#7038F8 30px,#5A5A5A 31px,#5A5A5A);",
-        icon: "https://archives.bulbagarden.net/media/upload/thumb/9/91/Dragon_icon.png/20px-Dragon_icon.png"
+        color:"background:linear-gradient(105deg,#7038F8 30px,#5A5A5A 31px,#5A5A5A);",
+        icon: "https://archives.bulbagarden.net/media/upload/thumb/9/91/Dragon_icon.png/20px-Dragon_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#7038F8 36%, #ffffff 36%);"
     },
     fairy: {
-        color:"linear-gradient(105deg,#EE99AC 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/5/5a/Fairy_icon.png/20px-Fairy_icon.png"
+        color:"background:linear-gradient(105deg,#EE99AC 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/5/5a/Fairy_icon.png/20px-Fairy_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#EE99AC 36%, #ffffff 36%);"
     },
     stelar: {
-        color:"linear-gradient(105deg,#7CC7B2 30px,#5A5A5A 31px,#5A5A5A);",
-        icon:"https://archives.bulbagarden.net/media/upload/thumb/9/9f/Stellar_icon.png/20px-Stellar_icon.png"
+        color:"background:linear-gradient(105deg,#7CC7B2 30px,#5A5A5A 31px,#5A5A5A);",
+        icon:"https://archives.bulbagarden.net/media/upload/thumb/9/9f/Stellar_icon.png/20px-Stellar_icon.png",
+        bgn: "background:radial-gradient(circle at 50% 0%,#7CC7B2 36%, #ffffff 36%);"
     },
   };
+
+function statsName(name: string){
+    let names: any = {
+        attack: AttackIcon,
+        defense: DefenseIcon,
+        hp: HpIcon,
+        "special-attack": SpecialAttackIcon,
+        "special-defense": SpecialDefenseIcon,
+        speed: SpeedIcon,
+    }
+
+    return names[name];
+}
+
+function statsColor(name: string){
+    let colors: any = {
+        attack: "background:linear-gradient(105deg,#c0c0c0 30px,#5A5A5A 31px,#5A5A5A);",
+        defense: "background:linear-gradient(105deg,#4682b4 30px,#5A5A5A 31px,#5A5A5A);",
+        hp: "background:linear-gradient(105deg,#e32636 30px,#5A5A5A 31px,#5A5A5A);",
+        "special-attack": "background:linear-gradient(105deg,#c0c0c0 30px,#5A5A5A 31px,#5A5A5A);",
+        "special-defense": "background:linear-gradient(105deg,#4682b4 30px,#5A5A5A 31px,#5A5A5A);",
+        speed: "background:linear-gradient(105deg,#7CC7B2 30px,#5A5A5A 31px,#5A5A5A);",
+    }
+    return colors[name]
+}
 ---
 {
     search != "" && er  !== true &&
     <li class="pt-10">
         <article class="container">
-            <div class="card">
+            <div class="card" style={typeColor[pokemon.types[0]].bgn}>
                 <img src={pokemon.sprite}
                 alt={pokemon.name} loading="lazy">
                 <h1 class="name">{pokemon.name}</h1>
@@ -136,7 +189,7 @@ const typeColor: any = {
                     {
                         pokemon.types.map((type: any) =>{
                             return(
-                                <span style=`background:${typeColor[type].color}`>
+                                <span style={typeColor[type].color}>
                                     <img src={typeColor[type].icon}>
                                     <p>{type}</p>
                                 </span>
@@ -145,18 +198,18 @@ const typeColor: any = {
                     }
                 </div>
 
-                <div class="stats">
+                <div class="stats grid grid-cols-3 mx-auto">
                     {
                         pokemon.stats.map((stats: any) =>{
                             return(
-                                <div>
-                                    <h3>{stats.base_stat}</h3>
-                                    <p>{stats.name}</p>
-                                </div>
-                            )
+                                <span style={stats.color}>
+                                    <stats.name class="svg"/>
+                                    <p>{stats.base_stat}</p>
+                                </span>
+                                )
                         })
                     }
-                </div>
+                    </div>
 
                 // <div>
                 //     {
@@ -175,14 +228,7 @@ const typeColor: any = {
 
 <style>
 .container {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
     width: 350px;
-    // position: absolute;
-    // transform: translate(-50%, -50%);
-    // right: 50%;
-    // left: 50%;
 }
 .card {
     position: relative;
@@ -193,10 +239,7 @@ const typeColor: any = {
     padding: 30px 20px;
     box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15);
     border-radius: 10px;
-    background-color: #ffffff;
-    // position: relative;
     isolation: isolate;
-    // overflow: hidden;
     img{
         display: block;
         width: 180px;
@@ -221,7 +264,7 @@ const typeColor: any = {
     font-size: 6rem;
     font-weight: 800;
     z-index: -1;
-    color: #ececec;
+    color: #ffffff; //grisaseo #ececec;
 }
 .types {
     display: flex;
@@ -250,12 +293,29 @@ const typeColor: any = {
 }
 
 .stats {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  text-align: center;
-  p{
-    color: #404060;
-  }
+    text-transform: capitalize;
+    margin: 20px 0 40px 0;
+    justify-content: center;
+    span{
+        font-size: 12px;
+        letter-spacing: 0.4px;
+        font-weight: 600;
+        padding: 2px 2px 2px 4px;
+        border-radius:20px;
+        color: #ffffff;
+        display:inline-flex;
+        align-items: center;
+        min-width: 50px;
+        margin: 5px;
+        .svg{
+            width:20px;
+            height:20px;
+        }
+        p{
+             margin: 0 auto;
+        }
+    }
+}
+
 }
 </style>
