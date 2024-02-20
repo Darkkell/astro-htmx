@@ -1,6 +1,34 @@
 # Astro - HTMX
 
-Incluyendo HTMX en Astro
+Adding HTMX to Astro
+
+## What is htmx?
+
+>htmx gives you access to AJAX, CSS Transitions, WebSockets and Server Sent Events directly in HTML, using attributes, so you can build modern user interfaces with the simplicity and power of hypertext
+>
+>htmx is small (~14k min.gz’d), dependency-free, extendable, IE11 compatible & has reduced code base sizes by 67% when compared with react
+
+Feel free to check [htmx documentation](https://htmx.org/)
+
+## Examples
+
+### #3 pokedex
+
+- Search pokemon with number or name
+
+![Pokedex preview](/src/images/700shots_so.webp "Pokedex Preview")
+
+### #2 movies
+
+- Search movies
+
+![Pokedex preview](/src/images/949shots_so.webp "Pokedex Preview")
+
+### #1 cat facts
+
+- Random Catfacts
+
+![Pokedex preview](/src/images/655shots_so.webp "Pokedex Preview")
 
 ## Astro Starter Kit: Basics
 
