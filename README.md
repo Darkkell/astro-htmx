@@ -12,21 +12,21 @@ Feel free to check [htmx documentation](https://htmx.org/)
 
 ## Examples
 
-### #3 pokedex
+### #3 Pokedex
 
-- Search pokemon with number or name
+- Search Pokemon with number or name
 
 ![Pokedex preview](/src/images/700shots_so.webp "Pokedex Preview")
 
-### #2 movies
+### #2 Movies
 
 - Search movies
 
 ![Pokedex preview](/src/images/949shots_so.webp "Pokedex Preview")
 
-### #1 cat facts
+### #1 Cat facts
 
-- Random Catfacts
+- Random Cat facts
 
 ![Pokedex preview](/src/images/655shots_so.webp "Pokedex Preview")
 
